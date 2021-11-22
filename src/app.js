@@ -1,25 +1,16 @@
-console.log("Merhaba Kodlama.io")
+import CustomerService from "./services/customerService.js";
+import DataControlService from "./services/dataControlService.js";
+import EmployeeService from "./services/employeeService.js";
+import UserService from "./services/userService.js";
 
-let dolarBugun = 9.20
+let customerService = new CustomerService();
+let employeeService = new EmployeeService();
+let userService = new UserService();
 
 
-let dolarDun = 9.20
+let dataControlService = new DataControlService(userService,customerService,employeeService)
+dataControlService.load()
 
-{
-    let dolarDun = 9.10
-}
-
-console.log(dolarDun)
-
-const euroDun = 11.2
-//euroDun = 11
-
-console.log(euroDun)
-
-//array
-let konutKredileri = ["Konut Kredisi","Emlak Konut Kredisi","Kamu Konut Kredisi"]
-
-for (let index = 0; index < konutKredileri.length; index++) {
-    console.log(konutKredileri[index])
-}
-console.log(konutKredileri)
+console.log(userService.list())
+console.log(employeeService.list())
+console.log(customerService.list())
