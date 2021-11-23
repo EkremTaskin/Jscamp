@@ -4,7 +4,7 @@ export default class CustomerService {
     }
 
     add(user) {
-        if (this.validateCustomer(user)) {
+        if (this.validateCustomer(user) && this.validateCustomerAge(user)) {
             this.customers.push(user)
         }
     }
@@ -17,6 +17,18 @@ export default class CustomerService {
         return this.customers.find(i => i.id === id)
     }
 
+    getSorted() {
+        return this.customers.sort((customer1, customer2) => {
+            if (customer1["firstName"] < customer2["firstName"]) {
+                return -1
+            } else if (customer1["firstName"] === customer2["firstName"]) {
+                return 0
+            } else {
+                return 1
+            }
+        })
+    }
+    
     validateCustomer(user) {
         let requiredFields = "id firstName lastName age city".split(" ")
         let hasErrors = false
@@ -27,10 +39,13 @@ export default class CustomerService {
             }
         }
 
-        if(Number.isNaN(Number.parseInt(user.age))){
+        return hasErrors
+    }
+
+    validateCustomerAge(user){
+        if (Number.isNaN(Number.parseInt(user.age))) {
             return new DataError(`Validation problem. ${user.age} is not a number`, user)
         }
-
-        return hasErrors
+        return true;
     }
 }
